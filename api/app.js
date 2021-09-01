@@ -8,4 +8,10 @@ app.use(express.json())
 app.use("/api/todos", todoEndpoints)
 app.use("/api/user", userEndpoints)
 
+app.use((err, req, res, next) => {
+    res.status(err.status).json({
+        message: err.message
+    })
+})
+
 module.exports = app
