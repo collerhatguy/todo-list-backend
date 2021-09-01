@@ -1,5 +1,7 @@
 const express = require("express")
 const router = express.Router()
+const { validateTodo, validateTodoId } = require("./middleware")
+const { validateUserId } = require("../users/middleware")
 
 // 1. get todos
 // 2. update todos
@@ -8,22 +10,29 @@ const router = express.Router()
 
 
 // 1. get todos
-router.get("/", (req, res) => {
+router.get("/:id", validateUserId, (req, res) => {
 
 })
+
 // 2. update todos
-router.put("/", (req, res) => {
+router.put("/:id", validateUserId, validateTodo, (req, res) => {
     
 })
 
 // 3. delete todos
-router.delete("/", (req, res) => {
+router.delete("/:id/:todo_id", validateUserId, validateTodoId, (req, res) => {
 
 })
 
 // 4. add todos
-router.post("/", (req, res) => {
+router.post("/:id", validateTodo, validateUserId, (req, res) => {
 
+})
+
+router.use((err, req, res, next) => {
+    res.status(err.status).json({
+        message: err.message
+    })
 })
 
 module.exports = router

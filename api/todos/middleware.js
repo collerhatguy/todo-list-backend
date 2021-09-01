@@ -7,3 +7,12 @@ const validateTodo = (req, res, next) => {
     req.todo = { ...req.body, user_id: req.params.id}
     next()
 } 
+
+const validateTodoId = (req, res, next) => {
+    const { todo_id } = req.params
+    // check if its there
+    next()
+}
+
+
+module.exports = { validateTodo, validateTodoId }
