@@ -1,29 +1,36 @@
 const express = require("express")
 const router = express.Router()
+const { validateUser, validateUserId } = require("./middleware")
 
-// 1. validate user
+// 1. get user
 // 2. update user
 // 3. delete user
 // 4. add user
 
 
 // 1. get user
-router.get("/", (req, res) => {
-
+router.get("/:id", validateUserId, (req, res) => {
 })
+
 // 2. update user
-router.put("/", (req, res) => {
-    
+router.put("/:id", validateUserId, validateUser, (req, res) => {
+
 })
 
 // 3. delete user
-router.delete("/", (req, res) => {
+router.delete("/:id", validateUserId, (req, res) => {
 
 })
 
 // 4. add user
-router.post("/", (req, res) => {
+router.post("/", validateUser, (req, res) => {
 
+})
+
+router.use((err, req, res, next) => {
+    res.status(err.status).json({
+        message: err.message
+    })
 })
 
 module.exports = router

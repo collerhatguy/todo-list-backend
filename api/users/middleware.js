@@ -13,3 +13,5 @@ const validateUserId = (req, res, next) => {
     // code for getting user from database
     next()
 }
+
+module.exports = { validateUser, validateUserId }
