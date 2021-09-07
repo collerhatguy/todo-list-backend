@@ -1,17 +1,26 @@
-
-const validateUser = (req, res, next) => {
+const { getAccountById } = require("./model")
+const validateUserPayload = (req, res, next) => {
     const { username, password, email } = req.body
-    if (!username || typeof username !== String || username.length <= 3) next({ status: 404, message: "invalid username" })
-    if (!password || typeof password !== String || password.length <= 3) next({ status: 404, message: "invalid password" })
-    if (!email || typeof email !== String || email.length <= 3) next({ status: 404, message: "invalid password" })
-    req.user = req.body
+    username = username.trim()
+    password = password.trim()
+    email = email.trim()
+    if (!username || typeof username !== "string" || username.length <= 3) next({ status: 404, message: "invalid username" })
+    if (!password || typeof password !== "string" || password.length <= 3) next({ status: 404, message: "invalid password" })
+    if (!email || typeof email !== "string" || email.length <= 3) next({ status: 404, message: "invalid password" })
+    req.userPayload = { username, password, email }
     next()
 } 
 
 const validateUserId = (req, res, next) => {
     const { id } = req.params
-    // code for getting user from database
-    next()
+    getAccountById(id)
+        .then(user => {
+            if (user) {
+                req.user = user
+                next()
+            } 
+            next({ status: 400, message: "user not found" })
+        }).catch(next)
 }
 
-module.exports = { validateUser, validateUserId }
+module.exports = { validateUserPayload, validateUserId }

@@ -20,7 +20,7 @@ const addTodo = todo => {
 
 const updateTodo = (id, update) => {
     return todos
-        .update(todo)
+        .update(update)
         .where({ id })
 }
 
