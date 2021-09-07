@@ -1,3 +1,4 @@
+const { getTodoById } = require("./model")
 
 const validateTodo = (req, res, next) => {
     const { todo, id, completed } = req.body
@@ -9,10 +10,12 @@ const validateTodo = (req, res, next) => {
 } 
 
 const validateTodoId = (req, res, next) => {
-    const { todo_id } = req.params
-    // check if its there
-    next()
+    const { id } = req.params
+    getTodoById(id)
+        .then(todo => {
+            req.todo = todo
+            next()
+        }).catch(next)
 }
-
 
 module.exports = { validateTodo, validateTodoId }

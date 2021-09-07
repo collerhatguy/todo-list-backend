@@ -28,4 +28,4 @@ const deleteTodo = id => {
     getTodoById(id).del()
 }
 
-module.exports = { getTodosByUserId, addTodo, updateTodo, deleteTodo }
+module.exports = { getTodosByUserId, addTodo, updateTodo, deleteTodo, getTodoById }
