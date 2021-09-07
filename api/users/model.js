@@ -14,6 +14,10 @@ exports.createAccount = account => {
         .then(([id]) => this.getAccountById(id))
 }
 
+exports.deleteAccount = id => {
+    return this.getAccountById(id).del()
+}
+
 exports.login = account => {
     return accounts
         .where(account)
