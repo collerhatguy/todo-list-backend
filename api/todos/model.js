@@ -2,9 +2,10 @@ const db = require("../../data/db_config")
 
 const todos = db("todos")
 
-const getTodosByUserId = user_id => {
+const getTodosByUserId = account_id => {
     return todos
-        .where({ user_id })
+        .where({ account_id })
+        .sortBy("id")
 }
 
 const getTodoById = id => {

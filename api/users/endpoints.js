@@ -1,6 +1,6 @@
 const router = require("express").Router()
 const { validateUserId, validateUserPayload } = require("./middleware")
-const { deleteAccount, createAccount } = require("./model")
+const { deleteAccount, createAccount, login } = require("./model")
 
 router.get("/:id", validateUserId, (req, res) => {
     res.status(200).json(req.user)
@@ -20,8 +20,14 @@ router.delete("/:id", validateUserId, (req, res, next) => {
 router.post("/", validateUserPayload, (req, res, next) => {
     const { user } = req
     createAccount(user)
-        .then(newUser => res.status(201).json(newUser))
-        .catch(next)
+    .then(newUser => res.status(201).json(newUser))
+    .catch(next)
+})
+
+router.get("/", validateUserPayload, (req, res, next) => {
+    const { user } = req
+    const credentials = login(user)
+    res.status(200).json(credentials)
 })
 
 module.exports = router

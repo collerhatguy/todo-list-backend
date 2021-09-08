@@ -18,8 +18,11 @@ exports.deleteAccount = id => {
     return this.getAccountById(id).del()
 }
 
-exports.login = account => {
-    return accounts
+exports.login = async account => {
+    const user = await db("accounts as ac")
+        .leftJoin("todos as t", "t.account_id", "ac.account_id")
+        .select("t.*", "ac.username as name")
         .where(account)
         .first()
+    return user 
 }

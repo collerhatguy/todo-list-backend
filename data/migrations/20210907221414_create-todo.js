@@ -4,7 +4,7 @@ exports.up = (knex) => {
         table.increments()
         table.string("todo").notNullable().required()
         table.boolean("completed").notNullable().required()
-        table.integer("user_id").notNullable().required()
+        table.foreign("account_id")
     })
 };
 

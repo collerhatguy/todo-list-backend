@@ -1,10 +1,10 @@
 
 exports.up = (knex) => {
     return knex.schema.createTable("accounts", (table) => {
-        table.increments()
+        table.increments("account_id")
         table.string("email").notNullable().unique()
-        table.string("password").notNullable().unique()
-        table.string("email").notNullable().unique()
+        table.string("password").notNullable()
+        table.string("username").notNullable().unique()
     })
 };
 
