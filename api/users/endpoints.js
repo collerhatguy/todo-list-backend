@@ -18,15 +18,15 @@ router.delete("/:id", validateUserId, (req, res, next) => {
 })
 
 router.post("/", validateUserPayload, (req, res, next) => {
-    const { user } = req
-    createAccount(user)
+    const { userPayload } = req
+    createAccount(userPayload)
     .then(newUser => res.status(201).json(newUser))
     .catch(next)
 })
 
 router.get("/", validateUserPayload, (req, res, next) => {
-    const { user } = req
-    const credentials = login(user)
+    const { userPayload } = req
+    const credentials = login(userPayload)
     res.status(200).json(credentials)
 })
 

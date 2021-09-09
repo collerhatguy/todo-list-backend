@@ -1,15 +1,13 @@
 const db = require("../../data/db_config")
 
-const accounts = db("accounts")
-
 exports.getAccountById = id => {
-    return accounts
+    return db("accounts")
         .where({ id })
         .first()
 }
 
 exports.createAccount = account => {
-    return accounts
+    return db("accounts")
         .insert(account)
         .then(([id]) => this.getAccountById(id))
 }
@@ -23,6 +21,5 @@ exports.login = async account => {
         .leftJoin("todos as t", "t.account_id", "ac.account_id")
         .select("t.*", "ac.username as name")
         .where(account)
-        .first()
     return user 
 }

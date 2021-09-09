@@ -9,7 +9,7 @@ app.use("/api/todos", todoEndpoints)
 app.use("/api/user", userEndpoints)
 
 app.use((err, req, res, next) => {
-    res.status(err.status).json({
+    res.status(err.status || 500).json({
         message: err.message
     })
 })
