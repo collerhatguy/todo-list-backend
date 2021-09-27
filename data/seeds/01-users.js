@@ -1,8 +1,8 @@
 
 exports.seed = function(knex) {
-  return knex('table_name').del()
+  return knex('accounts').del()
     .then(() => {
-      return knex('table_name').insert([
+      return knex('accounts').insert([
         {
           account_id: 1, 
           username: "test", 

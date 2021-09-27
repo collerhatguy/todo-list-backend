@@ -1,8 +1,8 @@
 
 exports.seed = function(knex) {
-  return knex('table_name').del()
+  return knex('todos').del()
     .then(function () {
-      return knex('table_name').insert([
+      return knex('todos').insert([
         {
           id: 1, 
           todo: 'make seeds', 
