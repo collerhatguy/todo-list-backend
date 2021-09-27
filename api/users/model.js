@@ -13,7 +13,7 @@ exports.createAccount = account => {
 }
 
 exports.checkUsernameExists = username => {
-    return db("accounts")
+    return db("accounts as ac")
         .leftJoin("todos as t", "t.account_id", "ac.account_id")
         .select("t.*", "ac.username as name")
         .where({ username })

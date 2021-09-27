@@ -1,6 +1,6 @@
 const router = require("express").Router()
 const { validateUserPayload, validateUsernameExists } = require("./middleware")
-const { createAccount, login } = require("./model")
+const { createAccount } = require("./model")
 const bcrypt = require("bcrypt")
 
 router.post("/login", validateUserPayload, validateUsernameExists, (req, res, next) => {
