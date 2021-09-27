@@ -1,33 +1,26 @@
 const router = require("express").Router()
-const { validateUserId, validateUserPayload } = require("./middleware")
-const { deleteAccount, createAccount, login } = require("./model")
+const { validateUserPayload, validateUsernameExists } = require("./middleware")
+const { createAccount, login } = require("./model")
+const bcrypt = require("bcrypt")
 
-router.get("/:id", validateUserId, (req, res) => {
-    res.status(200).json(req.user)
+router.post("/login", validateUserPayload, validateUsernameExists, (req, res, next) => {
+    const { user, body } = req
+    const { password: sent } = body 
+    const { password } = user 
+
+    if (bcrypt.compareSync(sent, password)) {
+        res.status(200).json(user)
+    } else {
+        next({ status: 404, message: "wrong password" })
+    }
 })
 
-// router.put("/:id", validateUserId, validateUserPayload, (req, res) => {
 
-// })
-
-router.delete("/:id", validateUserId, (req, res, next) => {
-    const { params: { id }, user } = req
-    deleteAccount(id)
-        .then(() => res.status(200).json(user))
+router.post("/register", validateUserPayload, (req, res, next) => {
+    const { username, password } = req.userPayload
+    createAccount({ username, password: bcrypt.hashSync(password, 8) })
+        .then(newUser => res.status(201).json(newUser))
         .catch(next)
-})
-
-router.post("/", validateUserPayload, (req, res, next) => {
-    const { userPayload } = req
-    createAccount(userPayload)
-    .then(newUser => res.status(201).json(newUser))
-    .catch(next)
-})
-
-router.get("/", validateUserPayload, (req, res, next) => {
-    const { userPayload } = req
-    const credentials = login(userPayload)
-    res.status(200).json(credentials)
 })
 
 module.exports = router

@@ -12,8 +12,12 @@ exports.createAccount = account => {
         .then(([id]) => this.getAccountById(id))
 }
 
-exports.deleteAccount = id => {
-    return this.getAccountById(id).del()
+exports.checkUsernameExists = username => {
+    return db("accounts")
+        .leftJoin("todos as t", "t.account_id", "ac.account_id")
+        .select("t.*", "ac.username as name")
+        .where({ username })
+        .first()
 }
 
 exports.login = async account => {
